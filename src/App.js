@@ -1,23 +1,36 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import CatList from './CatList';
+import CatForm from './CatForm';
 
 function App() {
+  const [catList, setCatList] = useState([]);
+
+  const addCat = (cat) => {
+    setCatList([...catList, cat]);
+  };
+
+  const removeCat = (index) => {
+    const updatedList = [...catList];
+    updatedList.splice(index, 1);
+    setCatList(updatedList);
+  };
+
+  const editCat = (index, updatedCat) => {
+    const updatedList = [...catList];
+    updatedList[index] = updatedCat;
+    setCatList(updatedList);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Ash Cat Tracker</h1>
+      <CatForm addCat={addCat} />
+      <CatList
+        catList={catList}
+        removeCat={removeCat}
+        editCat={editCat}
+      />
     </div>
   );
 }
